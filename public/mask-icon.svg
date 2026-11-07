@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" fill="#0a0714"/><g transform="translate(87,87) scale(0.66)">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c1233"/>
+      <stop offset="0.55" stop-color="#100a1f"/>
+      <stop offset="1" stop-color="#08060d"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+      <stop offset="0" stop-color="#c98bff"/>
+      <stop offset="0.5" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Rounded-square app background -->
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  
+
+  <!-- Soft accent aura behind the mark -->
+  <ellipse cx="268" cy="268" rx="150" ry="140" fill="#a855f7" opacity="0.16"/>
+
+  <!-- Play triangle (rounded) -->
+  <g filter="url(#glow)">
+    <path d="M198 168
+             L348 250
+             Q364 259 364 268
+             Q364 277 348 286
+             L198 368
+             Q180 378 168 367
+             Q156 356 156 334
+             L156 202
+             Q156 180 168 169
+             Q180 158 198 168 Z"
+          fill="url(#acc)"/>
+    <path d="M198 168
+             L348 250
+             Q364 259 364 268
+             L156 268
+             L156 202
+             Q156 180 168 169
+             Q180 158 198 168 Z"
+          fill="url(#sheen)"/>
+  </g>
+
+  <!-- Anime sparkle: main 4-point star -->
+  <path d="M382 96
+           C389 127 403 141 434 148
+           C403 155 389 169 382 200
+           C375 169 361 155 330 148
+           C361 141 375 127 382 96 Z"
+        fill="#f3e8ff"/>
+  <!-- Anime sparkle: small companion star -->
+  <path d="M136 322
+           C140 340 148 348 166 352
+           C148 356 140 364 136 382
+           C132 364 124 356 106 352
+           C124 348 132 340 136 322 Z"
+        fill="#e9d5ff" opacity="0.9"/>
+</g></svg>
