@@ -161,7 +161,18 @@ CineStream project):
   `force_update: true` to make the in-app update dialog non-dismissable.
   Update the `apk_url` host/repo path if your published repo differs.
 - `/app` — the in-site download page (version badge + APK download +
-  install steps), linked from the footer ("Android App").
+  install steps), linked from the navbar ("App"), the mobile menu teaser and
+  the footer ("Android App"). It also has:
+  - **Raw download link** — the shareable
+    `raw.githubusercontent.com/.../public/anistream.apk` URL with one-tap
+    Copy / Open buttons (fallback if the on-site button is blocked).
+  - **Screenshot gallery** — 8 phone screenshots stored in `public/` as
+    `home.png`, `explore.png`, `movies.png`, `search.png`, `profile.png`,
+    `details.png`, `episodes.png`, `watch.png` (placeholder art is committed;
+    just overwrite the files with real captures — no code change needed).
+    Clicking any screenshot opens it in a centered full-screen viewer with
+    prev/next + swipe navigation, keyboard arrows and Escape-to-close, and
+    the page behind the viewer is scroll-locked.
 
 ## Brand - single color theme (shared with the Flutter app)
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bookmark, Menu, X, Home, Compass, Film, LogIn, Sparkles } from 'lucide-react';
+import { Search, Bookmark, Menu, X, Home, Compass, Film, LogIn, Smartphone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
@@ -69,12 +69,14 @@ export const Navbar: React.FC = () => {
     { label: 'Home', path: '/', icon: Home },
     { label: 'Browse', path: '/explore', icon: Compass },
     { label: 'Movies', path: '/movies', icon: Film },
+    { label: 'App', path: '/app', icon: Smartphone },
   ];
 
   const isActive = (path: string) => {
     if (path === '/') return route.type === 'home';
     if (path === '/explore') return route.type === 'explore';
     if (path === '/movies') return route.type === 'movies';
+    if (path === '/app') return route.type === 'app';
     return false;
   };
 
@@ -249,15 +251,15 @@ export const Navbar: React.FC = () => {
 
                 {/* App download teaser */}
                 <button
-                  onClick={() => handleNavClick('/explore')}
+                  onClick={() => handleNavClick('/app')}
                   className="w-full mt-4 p-4 rounded-2xl bg-gradient-to-br from-[#a855f7]/15 to-transparent border border-[#a855f7]/25 text-left cursor-pointer hover:border-[#a855f7]/50 transition-colors"
                 >
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-[#c084fc] mb-1">
-                    <Sparkles className="w-3 h-3" />
+                    <Smartphone className="w-3 h-3" />
                     <span>AniStream Mobile</span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Android app with offline downloads coming soon.
+                    The Android app is here — grab the APK and stream on the go.
                   </p>
                 </button>
               </div>

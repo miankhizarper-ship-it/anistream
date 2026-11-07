@@ -9,7 +9,13 @@ import {
   Sparkles,
   CheckCircle2,
   Loader2,
+  Link2,
+  Copy,
+  ExternalLink,
+  Maximize2,
 } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
+import { ImageViewerModal, ImageViewerItem } from '../components/ImageViewerModal';
 
 interface VersionManifest {
   latest_version: string;
@@ -18,6 +24,64 @@ interface VersionManifest {
   apk_url: string;
   release_notes: string;
 }
+
+/** The APK is committed to this repo at public/anistream.apk; this is the
+ *  shareable "raw" link to the same file on the public GitHub repo. */
+const RAW_APK_URL =
+  'https://raw.githubusercontent.com/miankhizarper-ship-it/AniStream/refs/heads/main/public/anistream.apk';
+
+interface AppScreenshot extends ImageViewerItem {}
+
+const APP_SCREENSHOTS: AppScreenshot[] = [
+  {
+    id: 'home',
+    title: 'Home',
+    subtitle: 'Trending spotlight, anime rails and continue-watching right on the landing screen.',
+    imagePath: '/home.png',
+  },
+  {
+    id: 'explore',
+    title: 'Explore',
+    subtitle: 'Genre, season and format filters laid out responsively with instant grid results.',
+    imagePath: '/explore.png',
+  },
+  {
+    id: 'movies',
+    title: 'Movies',
+    subtitle: 'Dedicated anime-movies browser with infinite scroll and a jump-to-top button.',
+    imagePath: '/movies.png',
+  },
+  {
+    id: 'search',
+    title: 'Search',
+    subtitle: 'Fast predictive search across every title, with recent-search history.',
+    imagePath: '/search.png',
+  },
+  {
+    id: 'profile',
+    title: 'Profile',
+    subtitle: 'My List, watch progress and account settings in one place.',
+    imagePath: '/profile.png',
+  },
+  {
+    id: 'details',
+    title: 'Details',
+    subtitle: 'Full overview, cast, trailers and related recommendations for every anime.',
+    imagePath: '/details.png',
+  },
+  {
+    id: 'episodes',
+    title: 'Episodes',
+    subtitle: 'Episode sheet with SUB/DUB info, thumbnails and one-tap playback.',
+    imagePath: '/episodes.png',
+  },
+  {
+    id: 'watch',
+    title: 'Watch',
+    subtitle: 'Ad-blocked embed player with theater mode and server switching.',
+    imagePath: '/watch.png',
+  },
+];
 
 /**
  * Android app download page (/app).
@@ -28,8 +92,10 @@ interface VersionManifest {
  * version control system).
  */
 export const DownloadAppView: React.FC = () => {
+  const { showToast } = useToast();
   const [manifest, setManifest] = useState<VersionManifest | null>(null);
   const [downloading, setDownloading] = useState(false);
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -54,7 +120,18 @@ export const DownloadAppView: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    showToast('Starting anistream.apk download…', 'info');
     setTimeout(() => setDownloading(false), 2500);
+  };
+
+  const handleCopyRawLink = async () => {
+    try {
+      await navigator.clipboard.writeText(RAW_APK_URL);
+      showToast('Raw APK link copied to clipboard', 'success');
+    } catch {
+      // Clipboard API can be blocked — fall back to a manual copy prompt
+      window.prompt('Copy the raw APK link:', RAW_APK_URL);
+    }
   };
 
   const features: Array<{ icon: React.ReactNode; title: string; text: string }> = [
@@ -139,6 +216,100 @@ export const DownloadAppView: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Raw / direct APK link */}
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+        <div className="flex items-center gap-2 mb-2">
+          <Link2 className="w-4 h-4 text-[#c084fc]" />
+          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400">
+            Raw download link
+          </h2>
+        </div>
+        <p className="text-[11px] text-slate-500 leading-relaxed mb-3">
+          The APK lives at <code className="px-1 py-0.5 rounded bg-white/5 text-slate-400">public/anistream.apk</code> in
+          the public GitHub repo. If the button above doesn't work in your browser, use this raw link:
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex-1 min-w-0 flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 overflow-hidden">
+            <span className="text-[11px] sm:text-xs text-slate-300 font-mono truncate">
+              {RAW_APK_URL}
+            </span>
+          </div>
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={handleCopyRawLink}
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Copy className="w-3.5 h-3.5" />
+              <span>Copy</span>
+            </button>
+            <a
+              href={RAW_APK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#a855f7]/15 hover:bg-[#a855f7]/30 border border-[#a855f7]/40 text-[#d8b4fe] text-xs font-bold transition-colors flex items-center justify-center gap-1.5 no-underline"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Open</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* App screenshots gallery */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
+              <span className="w-1.5 h-4 bg-[#a855f7] rounded-full inline-block" />
+              App screenshots
+            </h2>
+            <p className="text-[11px] text-slate-500 mt-1">
+              Tap any screenshot to open it centered on screen — swipe or use the arrows to browse.
+            </p>
+          </div>
+          <span className="text-[11px] font-semibold text-slate-400 bg-white/5 px-3 py-1 rounded-full border border-white/10 whitespace-nowrap">
+            {APP_SCREENSHOTS.length} screens
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          {APP_SCREENSHOTS.map((screen, i) => (
+            <button
+              key={screen.id}
+              onClick={() => setViewerIndex(i)}
+              className="group text-left p-1.5 rounded-2xl bg-[#0d0a18]/80 border border-white/10 hover:border-[#a855f7]/60 hover:shadow-xl hover:shadow-purple-950/40 transition-all cursor-pointer relative"
+            >
+              <div className="aspect-[9/16] w-full rounded-xl overflow-hidden bg-black relative mb-1.5">
+                <img
+                  src={screen.imagePath}
+                  alt={screen.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-full bg-[#a855f7] flex items-center justify-center shadow-lg">
+                    <Maximize2 className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </div>
+              <div className="px-1 pb-1">
+                <h4 className="text-xs font-bold text-slate-200 group-hover:text-[#c084fc] transition-colors truncate">
+                  {screen.title}
+                </h4>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Centered image viewer */}
+      <ImageViewerModal
+        items={APP_SCREENSHOTS.map((s) => ({ ...s, badge: 'AniStream Android' }))}
+        index={viewerIndex}
+        onClose={() => setViewerIndex(null)}
+        onNavigate={setViewerIndex}
+      />
 
       {/* Features */}
       <div>
