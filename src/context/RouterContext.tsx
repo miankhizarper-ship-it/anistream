@@ -8,6 +8,7 @@ export type RouteType =
   | 'movies'
   | 'search'
   | 'mylist'
+  | 'app'
   | 'notfound';
 
 export interface RouteState {
@@ -94,6 +95,16 @@ function parsePath(fullPath: string): RouteState {
   if (segments[0] === 'mylist' || segments[0] === 'profile') {
     return {
       type: 'mylist',
+      params: {},
+      query,
+      rawPath: fullPath,
+    };
+  }
+
+  // /app — Android app download page (public/anistream.apk + app_version.json)
+  if (segments[0] === 'app' && segments.length === 1) {
+    return {
+      type: 'app',
       params: {},
       query,
       rawPath: fullPath,

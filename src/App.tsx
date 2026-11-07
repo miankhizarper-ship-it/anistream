@@ -21,6 +21,7 @@ import { ExploreView } from './views/ExploreView';
 import { MoviesView } from './views/MoviesView';
 import { SearchView } from './views/SearchView';
 import { MyListView } from './views/MyListView';
+import { DownloadAppView } from './views/DownloadAppView';
 import { NotFoundView } from './views/NotFoundView';
 
 const MainContent: React.FC = () => {
@@ -45,6 +46,8 @@ const MainContent: React.FC = () => {
         return <SearchView query={route.query} />;
       case 'mylist':
         return <MyListView />;
+      case 'app':
+        return <DownloadAppView />;
       default:
         return <NotFoundView />;
     }

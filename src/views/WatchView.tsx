@@ -244,6 +244,12 @@ export const WatchView: React.FC<WatchViewProps> = ({ id, episode }) => {
                 allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
                 allowFullScreen
                 referrerPolicy="origin"
+                /* Lightweight embed adblocker: without allow-popups the
+                   embed's popunder ads can't open background tabs, and
+                   without allow-top-navigation they can't hijack the page.
+                   Playback (scripts/same-origin/forms/presentation) stays
+                   fully enabled. */
+                sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-orientation-lock"
               />
             </div>
 

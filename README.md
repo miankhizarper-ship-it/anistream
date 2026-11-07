@@ -134,8 +134,34 @@ src/
   components/             # Navbar, BottomNav, Hero (in HomeView), cards, rows,
                           # EpisodeGrid, CommandPalette, Footer, states, Logo
   views/                  # Home, Details, Watch, Explore, Movies, Search,
-                          # MyList, 404
+                          # MyList, DownloadApp (/app), 404
 ```
+
+## Android app & version control system
+
+The site doubles as the release hub for the Flutter app (same scheme as the
+CineStream project):
+
+- `public/anistream.apk` — the signed release APK. Drop a new build here and
+  commit; the Flutter app can download and install it in one tap.
+- `public/app_version.json` — the release manifest the app checks on every
+  start:
+
+  ```json
+  {
+    "latest_version": "1.0.0",
+    "min_supported_version": "1.0.0",
+    "force_update": false,
+    "apk_url": "https://raw.githubusercontent.com/<owner>/<repo>/refs/heads/main/public/anistream.apk",
+    "release_notes": "..."
+  }
+  ```
+
+  Bump `latest_version` (and swap the APK) to push an update; set
+  `force_update: true` to make the in-app update dialog non-dismissable.
+  Update the `apk_url` host/repo path if your published repo differs.
+- `/app` — the in-site download page (version badge + APK download +
+  install steps), linked from the footer ("Android App").
 
 ## Brand - single color theme (shared with the Flutter app)
 

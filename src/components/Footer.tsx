@@ -11,6 +11,7 @@ export const Footer: React.FC = () => {
     { label: 'Anime Movies', path: '/movies' },
     { label: 'Search', path: '/search' },
     { label: 'My List', path: '/mylist' },
+    { label: 'Android App', path: '/app' },
   ];
 
   const genres: Array<{ label: string; genre: string }> = [
