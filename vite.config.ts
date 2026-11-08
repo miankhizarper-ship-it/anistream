@@ -59,6 +59,26 @@ export default defineConfig(() => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          // The /app page screenshots are heavy artwork that gets replaced
+          // freely (the current repo copies are 2+ MB). They must NOT be
+          // precached: Workbox's 2 MiB per-file limit turns them into a hard
+          // BUILD failure (Cloudflare deploy crash), and precaching ~13 MB of
+          // artwork on first visit would bloat offline storage. They are
+          // served from the network and cached on demand by the same-origin
+          // image runtime rule below instead.
+          globIgnores: [
+            '**/home.png',
+            '**/explore.png',
+            '**/movies.png',
+            '**/search.png',
+            '**/profile.png',
+            '**/details.png',
+            '**/episodes.png',
+            '**/watch.png',
+          ],
+          // Safety net: a deploy must never fail again just because a stray
+          // asset crossed Workbox's default 2 MiB per-file precache limit.
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -96,6 +116,25 @@ export default defineConfig(() => {
                 expiration: {
                   maxEntries: 120,
                   maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Same-origin images that are NOT precached — the /app page
+              // screenshots. StaleWhileRevalidate keeps them offline-capable
+              // after the first view without the up-front precache cost.
+              // (Precached assets are always served by the precache
+              // controller first, so this rule never duplicates them.)
+              urlPattern: /\.(?:png|jpe?g|webp|gif|avif)$/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'app-images-cache',
+                expiration: {
+                  maxEntries: 32,
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
                 },
                 cacheableResponse: {
                   statuses: [0, 200],
