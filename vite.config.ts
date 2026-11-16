@@ -19,8 +19,8 @@ export default defineConfig(() => {
         includeAssets: ['icon.svg', 'favicon.svg', 'mask-icon.svg'],
         manifest: {
           id: '/',
-          name: 'AniStream - Anime Streaming',
-          short_name: 'AniStream',
+          name: 'EniStream - Anime Streaming',
+          short_name: 'EniStream',
           description:
             'An anime streaming web application featuring live AniList discovery, responsive carousels, dedicated Yenime embed player, and watchlist persistence.',
           theme_color: '#08060d',

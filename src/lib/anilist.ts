@@ -1,5 +1,5 @@
 /**
- * AniStream data layer.
+ * EniStream data layer.
  *
  * Primary source: Consumet meta/anilist endpoints (trending, popular,
  * airing-schedule, search, advanced-search, info) hosted at CONSUMET_BASE.

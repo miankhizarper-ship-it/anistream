@@ -162,10 +162,10 @@ export const DownloadAppView: React.FC = () => {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              AniStream for Android
+              EniStream for Android
             </h1>
             <p className="text-sm text-slate-400 max-w-xl leading-relaxed">
-              The full AniStream experience as a native app — built with Flutter, signed APK,
+              The full EniStream experience as a native app — built with Flutter, signed APK,
               and a built-in updater that installs new versions straight from this site.
             </p>
           </div>
@@ -241,7 +241,7 @@ export const DownloadAppView: React.FC = () => {
 
       {/* Centered image viewer */}
       <ImageViewerModal
-        items={APP_SCREENSHOTS.map((s) => ({ ...s, badge: 'AniStream Android' }))}
+        items={APP_SCREENSHOTS.map((s) => ({ ...s, badge: 'EniStream Android' }))}
         index={viewerIndex}
         onClose={() => setViewerIndex(null)}
         onNavigate={setViewerIndex}

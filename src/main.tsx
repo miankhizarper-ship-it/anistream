@@ -3,14 +3,14 @@ import { registerSW } from 'virtual:pwa-register';
 import App from './App';
 import './index.css';
 
-// Register PWA service worker so browsers recognize AniStream as installable
+// Register PWA service worker so browsers recognize EniStream as installable
 registerSW({
   immediate: true,
   onNeedRefresh() {
-    console.log('[PWA] New AniStream update available.');
+    console.log('[PWA] New EniStream update available.');
   },
   onOfflineReady() {
-    console.log('[PWA] AniStream is ready for offline browsing.');
+    console.log('[PWA] EniStream is ready for offline browsing.');
   },
   onRegisterError(error) {
     console.error('[PWA] SW registration failed:', error);

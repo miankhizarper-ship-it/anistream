@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * AniStream brand mark - inline SVG version of /public/icon.svg
+ * EniStream brand mark - inline SVG version of /public/icon.svg
  * Purple gradient play triangle + anime sparkles on a dark rounded square.
  */
 export const LogoMark: React.FC<{ className?: string }> = ({ className = 'w-8 h-8' }) => (
@@ -38,7 +38,7 @@ export const LogoMark: React.FC<{ className?: string }> = ({ className = 'w-8 h-
 
 export const LogoWordmark: React.FC<{ compact?: boolean }> = ({ compact }) => (
   <span className="font-extrabold tracking-tight bg-gradient-to-r from-white via-white to-slate-200 bg-clip-text text-transparent inline-block drop-shadow-md">
-    ANI<span className="text-[#a855f7]">STREAM</span>
+    ENI<span className="text-[#a855f7]">STREAM</span>
     {!compact && null}
   </span>
 );

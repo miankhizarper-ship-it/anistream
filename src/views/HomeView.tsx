@@ -416,7 +416,7 @@ export const HomeView: React.FC = () => {
         </section>
       )}
 
-      {/* AniStream Android App Teaser (Desktop only) */}
+      {/* EniStream Android App Teaser (Desktop only) */}
       <section className="my-10 px-4 sm:px-6 md:px-12 hidden lg:block">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#12101e] via-[#150f28] to-[#a855f7]/10 border border-[#a855f7]/20 p-6 sm:p-8 md:p-10 shadow-2xl">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#a855f7]/10 rounded-full blur-3xl pointer-events-none" />
@@ -427,7 +427,7 @@ export const HomeView: React.FC = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#a855f7] animate-ping" />
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                AniStream is coming to <span className="bg-gradient-to-r from-[#c084fc] to-[#a855f7] bg-clip-text text-transparent">Android</span>
+                EniStream is coming to <span className="bg-gradient-to-r from-[#c084fc] to-[#a855f7] bg-clip-text text-transparent">Android</span>
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Offline episode downloads, synced watch history, and a beautiful anime-first

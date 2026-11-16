@@ -256,7 +256,7 @@ export const Navbar: React.FC = () => {
                 >
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-[#c084fc] mb-1">
                     <Smartphone className="w-3 h-3" />
-                    <span>AniStream Mobile</span>
+                    <span>EniStream Mobile</span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
                     The Android app is here — grab the APK and stream on the go.
@@ -266,7 +266,7 @@ export const Navbar: React.FC = () => {
 
               {/* Drawer Footer Info */}
               <div className="p-4 border-t border-white/10 bg-black/40 text-[11px] text-slate-500 text-center">
-                AniStream v1.0.0 · Anime Streaming
+                EniStream v1.0.0 · Anime Streaming
               </div>
             </motion.div>
           </div>

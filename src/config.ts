@@ -1,5 +1,5 @@
 /**
- * AniStream shared configuration.
+ * EniStream shared configuration.
  * Values can be overridden via Vite env vars (.env), sensible defaults included
  * so the site works out of the box on Cloudflare Workers without extra setup.
  */
@@ -20,7 +20,7 @@ export const PLAYER_BASE: string =
 export const yenimeEmbedUrl = (anilistId: string | number, episode: number, dub = false): string =>
   `${PLAYER_BASE}/anime/ani/${anilistId}/${episode}${dub ? '?dub=1' : ''}`;
 
-/** AniStream brand palette - single color theme shared with the Flutter app */
+/** EniStream brand palette - single color theme shared with the Flutter app */
 export const THEME = {
   bg: '#08060d',
   surface: '#12101e',

@@ -88,12 +88,12 @@ export const Footer: React.FC = () => {
         {/* Disclaimer */}
         <div className="mt-8 pt-6 border-t border-white/8">
           <p className="text-[11px] text-slate-500 leading-relaxed">
-            AniStream does not host or store any video files on its servers. All anime
+            EniStream does not host or store any video files on its servers. All anime
             metadata is provided by the AniList community database and playback is handled
-            by third-party embed players. AniStream is a discovery interface only.
+            by third-party embed players. EniStream is a discovery interface only.
           </p>
           <p className="text-[11px] text-slate-600 mt-2">
-            © {new Date().getFullYear()} AniStream · Built for anime fans
+            © {new Date().getFullYear()} EniStream · Built for anime fans
           </p>
         </div>
       </div>
