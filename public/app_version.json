@@ -1,7 +1,7 @@
 {
   "latest_version": "1.2.0",
   "min_supported_version": "1.0.0",
-  "force_update": true,
+  "force_update": false,
   "apk_url": "https://raw.githubusercontent.com/miankhizarper-ship-it/anistream/main/public/anistream.apk",
-  "release_notes": "Details Screen New design and bugs Fixed."
+  "release_notes": "Meet EniStream: the app is now EniStream with a new name, purple launcher icon and splash. Upgraded to production Clerk sign-in, plus Privacy Policy and Terms of Service links in Profile. Also includes: watch button always plays, movies play directly with no episode section, series open episode 1 with selectable episodes, collapsible synopsis (read more/less), and episodes batched 1-100 / 101-200 for smooth scrolling on long series."
 }
