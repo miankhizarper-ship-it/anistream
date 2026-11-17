@@ -9,6 +9,8 @@ export type RouteType =
   | 'search'
   | 'mylist'
   | 'app'
+  | 'privacy'
+  | 'terms'
   | 'notfound';
 
 export interface RouteState {
@@ -105,6 +107,26 @@ function parsePath(fullPath: string): RouteState {
   if (segments[0] === 'app' && segments.length === 1) {
     return {
       type: 'app',
+      params: {},
+      query,
+      rawPath: fullPath,
+    };
+  }
+
+  // /privacypolicy — legal page
+  if (segments[0] === 'privacypolicy' && segments.length === 1) {
+    return {
+      type: 'privacy',
+      params: {},
+      query,
+      rawPath: fullPath,
+    };
+  }
+
+  // /terms — legal page
+  if (segments[0] === 'terms' && segments.length === 1) {
+    return {
+      type: 'terms',
       params: {},
       query,
       rawPath: fullPath,

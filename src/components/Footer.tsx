@@ -14,6 +14,11 @@ export const Footer: React.FC = () => {
     { label: 'Android App', path: '/app' },
   ];
 
+  const legalLinks: Array<{ label: string; path: string }> = [
+    { label: 'Privacy Policy', path: '/privacypolicy' },
+    { label: 'Terms of Service', path: '/terms' },
+  ];
+
   const genres: Array<{ label: string; genre: string }> = [
     { label: 'Action', genre: 'Action' },
     { label: 'Romance', genre: 'Romance' },
@@ -40,7 +45,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Links */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-3">Explore</p>
               <ul className="space-y-2">
@@ -80,6 +85,22 @@ export const Footer: React.FC = () => {
                 <li>Consumet API</li>
                 <li>Yenime Player</li>
                 <li>Clerk Auth</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-3">Legal</p>
+              <ul className="space-y-2">
+                {legalLinks.map((link) => (
+                  <li key={link.path}>
+                    <button
+                      onClick={() => navigate(link.path)}
+                      className="text-xs font-semibold text-slate-400 hover:text-[#c084fc] transition-colors cursor-pointer"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

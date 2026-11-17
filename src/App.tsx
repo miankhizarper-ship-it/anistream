@@ -22,6 +22,7 @@ import { MoviesView } from './views/MoviesView';
 import { SearchView } from './views/SearchView';
 import { MyListView } from './views/MyListView';
 import { DownloadAppView } from './views/DownloadAppView';
+import { PrivacyPolicyView, TermsView } from './views/LegalView';
 import { NotFoundView } from './views/NotFoundView';
 
 const MainContent: React.FC = () => {
@@ -48,6 +49,10 @@ const MainContent: React.FC = () => {
         return <MyListView />;
       case 'app':
         return <DownloadAppView />;
+      case 'privacy':
+        return <PrivacyPolicyView />;
+      case 'terms':
+        return <TermsView />;
       default:
         return <NotFoundView />;
     }

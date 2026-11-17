@@ -8,7 +8,7 @@ const env = (typeof import.meta !== 'undefined' && import.meta.env) || ({} as an
 
 export const CLERK_PUBLISHABLE_KEY: string =
   env.VITE_CLERK_PUBLISHABLE_KEY ||
-  'pk_test_Zml0LXJhbS00ODYuY2xlcmsuYWNjb3VudHMuZGV2JA';
+  'pk_live_Y2xlcmsuZW5pc3RyZWFtLmNvbSQ';
 
 export const CONSUMET_BASE: string =
   (env.VITE_CONSUMET_BASE || 'https://apiconsumetorg-rho-lemon.vercel.app').replace(/\/+$/, '');
