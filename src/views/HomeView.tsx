@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Play, Info, Plus, Check, Star, ChevronLeft, ChevronRight, Clock, Sparkles } from 'lucide-react';
+import {
+  Play, Info, Plus, Check, Star, ChevronLeft, ChevronRight, Clock, Sparkles,
+  Swords, Compass, Laugh, Clapperboard, Wand2, Heart, Rocket, Coffee, Trophy,
+  Ghost, Eye, Brain, Smartphone, Search, Home, User,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getTrending, getPopular, getAiringSchedule, normTitle, formatAiringCountdown } from '../lib/anilist';
 import type { AnimeItem } from '../lib/types';
@@ -9,6 +13,32 @@ import { useRouter } from '../context/RouterContext';
 import { useToast } from '../context/ToastContext';
 import { useWatchlist } from '../context/WatchlistContext';
 import { useWatchHistory } from '../context/WatchHistoryContext';
+
+/** Browse-by-Genre tiles — each genre pairs with a minimal lucide glyph. */
+const GENRES: Array<{ name: string; icon: React.ElementType }> = [
+  { name: 'Action', icon: Swords },
+  { name: 'Adventure', icon: Compass },
+  { name: 'Comedy', icon: Laugh },
+  { name: 'Drama', icon: Clapperboard },
+  { name: 'Fantasy', icon: Wand2 },
+  { name: 'Romance', icon: Heart },
+  { name: 'Sci-Fi', icon: Rocket },
+  { name: 'Slice of Life', icon: Coffee },
+  { name: 'Sports', icon: Trophy },
+  { name: 'Supernatural', icon: Ghost },
+  { name: 'Mystery', icon: Eye },
+  { name: 'Psychological', icon: Brain },
+];
+
+/** Poster gradients for the phone-mockup screen (stylized anime covers). */
+const MOCK_POSTERS = [
+  'from-[#4c1d95] via-[#7c3aed] to-[#312e81]',
+  'from-[#831843] via-[#be185d] to-[#500724]',
+  'from-[#134e4a] via-[#0f766e] to-[#042f2e]',
+  'from-[#7c2d12] via-[#c2410c] to-[#431407]',
+  'from-[#1e3a8a] via-[#2563eb] to-[#172554]',
+  'from-[#3f6212] via-[#4d7c0f] to-[#1a2e05]',
+];
 
 export const HomeView: React.FC = () => {
   const { navigate } = useRouter();
@@ -420,14 +450,14 @@ export const HomeView: React.FC = () => {
       <section className="my-10 px-4 sm:px-6 md:px-12 hidden lg:block">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#12101e] via-[#150f28] to-[#a855f7]/10 border border-[#a855f7]/20 p-6 sm:p-8 md:p-10 shadow-2xl">
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#a855f7]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-xl space-y-3 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#a855f7]/10 border border-[#a855f7]/30 text-[#c084fc] text-xs font-bold uppercase tracking-wider">
-                <span>Android App · Coming Soon</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#a855f7] animate-ping" />
+                <span>Android App · Available Now</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                EniStream is coming to <span className="bg-gradient-to-r from-[#c084fc] to-[#a855f7] bg-clip-text text-transparent">Android</span>
+                EniStream is now on <span className="bg-gradient-to-r from-[#c084fc] to-[#a855f7] bg-clip-text text-transparent">Android</span>
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Offline episode downloads, synced watch history, and a beautiful anime-first
@@ -435,54 +465,133 @@ export const HomeView: React.FC = () => {
               </p>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
                 <button
-                  onClick={() => navigate('/explore')}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#c084fc] hover:to-[#a855f7] text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-purple-950/80 active:scale-95 transition-all"
+                  onClick={() => navigate('/app')}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#c084fc] hover:to-[#a855f7] text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-purple-950/80 active:scale-95 transition-all flex items-center gap-2"
                 >
-                  Start Watching Now
+                  <Smartphone className="w-4 h-4" />
+                  <span>Download the App</span>
                 </button>
               </div>
             </div>
 
-            <div className="shrink-0 flex items-center justify-center">
-              <div className="w-40 h-40 rounded-3xl bg-[#08060d] border border-[#a855f7]/30 shadow-2xl accent-glow flex items-center justify-center rotate-3">
-                <svg viewBox="0 0 512 512" className="w-24 h-24">
-                  <defs>
-                    <linearGradient id="home-cta-acc" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
-                      <stop offset="0" stopColor="#c98bff" />
-                      <stop offset="0.5" stopColor="#a855f7" />
-                      <stop offset="1" stopColor="#7c3aed" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M198 168 L348 250 Q364 259 364 268 Q364 277 348 286 L198 368 Q180 378 168 367 Q156 356 156 334 L156 202 Q156 180 168 169 Q180 158 198 168 Z"
-                    fill="url(#home-cta-acc)"
-                  />
-                  <path
-                    d="M382 96 C389 127 403 141 434 148 C403 155 389 169 382 200 C375 169 361 155 330 148 C361 141 375 127 382 96 Z"
-                    fill="#f3e8ff"
-                  />
-                </svg>
+            {/* Phone mockup — a live-style EniStream screen, slightly angled
+                on a soft purple halo. Pure CSS: no image assets to ship. */}
+            <div className="relative shrink-0 flex items-center justify-center py-2">
+              <div className="absolute w-80 h-80 rounded-full bg-[#8b5cf6]/20 blur-3xl pointer-events-none" />
+              <div className="absolute w-56 h-56 rounded-full bg-[#a855f7]/25 blur-2xl pointer-events-none" />
+              <div className="relative rotate-6 w-[225px] h-[460px] rounded-[2.7rem] bg-gradient-to-b from-[#17141f] to-[#0b0a10] border border-white/15 shadow-[0_35px_90px_rgba(0,0,0,0.85),0_0_70px_rgba(139,92,246,0.28)] p-[9px]">
+                {/* side keys */}
+                <span className="absolute -right-[2.5px] top-32 w-[3px] h-14 rounded-full bg-white/25" />
+                <span className="absolute -left-[2.5px] top-28 w-[3px] h-9 rounded-full bg-white/25" />
+                <span className="absolute -left-[2.5px] top-44 w-[3px] h-9 rounded-full bg-white/25" />
+                {/* screen */}
+                <div className="w-full h-full rounded-[2.1rem] overflow-hidden bg-[#08060d] relative">
+                  {/* punch-hole camera */}
+                  <span className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-black border border-white/15 z-20" />
+                  {/* status bar */}
+                  <div className="flex items-center justify-between px-4 pt-2">
+                    <span className="text-[7px] font-semibold text-slate-500 tabular-nums">9:41</span>
+                    <span className="flex items-center gap-1">
+                      <span className="w-2 h-1.5 rounded-[1px] bg-slate-600" />
+                      <span className="w-2 h-1.5 rounded-[1px] bg-slate-600" />
+                      <span className="w-2.5 h-1.5 rounded-[1px] bg-slate-400" />
+                    </span>
+                  </div>
+                  {/* brand row */}
+                  <div className="flex items-center gap-1.5 px-3.5 pt-2">
+                    <span className="w-4 h-4 rounded-md bg-gradient-to-br from-[#c98bff] to-[#7c3aed] flex items-center justify-center shrink-0">
+                      <Play className="w-2 h-2 text-white fill-white" />
+                    </span>
+                    <span className="text-[9px] font-extrabold tracking-wide text-white">
+                      ENI<span className="text-[#a855f7]">STREAM</span>
+                    </span>
+                    <Search className="w-3 h-3 text-slate-500 ml-auto" />
+                  </div>
+                  {/* player preview */}
+                  <div className="mx-3 mt-2.5 relative aspect-video rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-[#2e1a52] via-[#191031] to-[#0d0d12]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(168,85,247,0.35),transparent_55%)]" />
+                    <span className="absolute inset-0 m-auto w-8 h-8 rounded-full bg-black/45 backdrop-blur border border-white/25 flex items-center justify-center">
+                      <Play className="w-3 h-3 text-white fill-white ml-0.5" />
+                    </span>
+                    <div className="absolute bottom-1.5 inset-x-2.5">
+                      <div className="h-[3px] rounded-full bg-white/15 overflow-hidden">
+                        <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-[#c084fc] to-[#a855f7]" />
+                      </div>
+                      <div className="flex justify-between mt-1 text-[6px] font-bold text-slate-400 tabular-nums">
+                        <span>EP 12 · 18:24</span>
+                        <span>23:58</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* trending row */}
+                  <div className="flex items-center justify-between px-3.5 mt-2.5">
+                    <span className="text-[8px] font-extrabold text-white">Trending Now</span>
+                    <span className="text-[6.5px] font-bold text-[#c084fc]">See all</span>
+                  </div>
+                  <div className="flex gap-1.5 px-3.5 mt-1">
+                    {MOCK_POSTERS.slice(0, 3).map((g) => (
+                      <div key={g} className="flex-1 min-w-0">
+                        <div className={`relative aspect-[2/3] rounded-lg bg-gradient-to-br ${g} border border-white/10 overflow-hidden`}>
+                          <Star className="absolute top-1 left-1 w-1.5 h-1.5 text-amber-400 fill-amber-400" />
+                          <span className="absolute inset-x-1 bottom-1 h-1 rounded-full bg-black/40" />
+                        </div>
+                        <div className="mt-1 h-[3px] w-3/4 mx-auto rounded-full bg-white/15" />
+                      </div>
+                    ))}
+                  </div>
+                  {/* popular row (peeks above the bottom nav like a real scroll) */}
+                  <div className="flex items-center justify-between px-3.5 mt-2">
+                    <span className="text-[8px] font-extrabold text-white">Popular This Season</span>
+                    <span className="text-[6.5px] font-bold text-[#c084fc]">See all</span>
+                  </div>
+                  <div className="flex gap-1.5 px-3.5 mt-1">
+                    {MOCK_POSTERS.slice(3, 6).map((g) => (
+                      <div key={g} className="flex-1 min-w-0">
+                        <div className={`relative aspect-[2/3] rounded-lg bg-gradient-to-br ${g} border border-white/10 overflow-hidden`}>
+                          <Star className="absolute top-1 left-1 w-1.5 h-1.5 text-amber-400 fill-amber-400" />
+                          <span className="absolute inset-x-1 bottom-1 h-1 rounded-full bg-black/40" />
+                        </div>
+                        <div className="mt-1 h-[3px] w-3/4 mx-auto rounded-full bg-white/15" />
+                      </div>
+                    ))}
+                  </div>
+                  {/* bottom navigation */}
+                  <div className="absolute bottom-0 inset-x-0 h-9 bg-[#0d0d12]/95 border-t border-white/[0.06] flex items-center justify-around px-2 backdrop-blur">
+                    <Home className="w-3 h-3 text-[#a855f7]" />
+                    <Compass className="w-3 h-3 text-slate-600" />
+                    <Search className="w-3 h-3 text-slate-600" />
+                    <User className="w-3 h-3 text-slate-600" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Genre quick chips */}
-      <section className="px-4 sm:px-6 md:px-12 mt-2 mb-4">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="w-1.5 h-4 bg-[#a855f7] rounded-full inline-block" />
+      {/* Browse by Genre — premium glassmorphic grid */}
+      <section className="px-4 sm:px-6 md:px-12 mt-6 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="w-1.5 h-4 bg-[#8b5cf6] rounded-full inline-block" />
           <h3 className="text-base sm:text-lg font-bold text-white">Browse by Genre</h3>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Slice of Life', 'Sports', 'Supernatural', 'Mystery', 'Psychological'].map((genre) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3">
+          {GENRES.map(({ name, icon: Icon }) => (
             <button
-              key={genre}
-              onClick={() => navigate(`/explore/${encodeURIComponent(genre)}`)}
-              className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-slate-300 hover:bg-[#a855f7]/15 hover:border-[#a855f7]/40 hover:text-white transition-all cursor-pointer flex items-center gap-1"
+              key={name}
+              onClick={() => navigate(`/explore/${encodeURIComponent(name)}`)}
+              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d0d12]/80 backdrop-blur-md p-4 sm:p-5 flex flex-col items-center justify-center gap-2.5 sm:gap-3 text-center transition-all duration-300 ease-out cursor-pointer hover:-translate-y-1.5 hover:border-[#8b5cf6]/50 hover:shadow-[0_14px_36px_rgba(0,0,0,0.65),0_0_24px_rgba(139,92,246,0.3)] active:scale-95"
             >
-              {genre}
-              <ChevronRight className="w-3 h-3 opacity-60" />
+              {/* hover glow wash + glass sheen */}
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#8b5cf6]/[0.12] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="pointer-events-none absolute top-0 inset-x-6 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+              {/* genre glyph */}
+              <span className="relative z-10 w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#8b5cf6]/[0.12] border border-[#8b5cf6]/25 flex items-center justify-center text-[#a78bfa] transition-all duration-300 group-hover:bg-[#8b5cf6]/25 group-hover:text-[#c4b5fd] group-hover:shadow-[0_0_18px_rgba(139,92,246,0.45)] group-hover:scale-110">
+                <Icon className="w-5 h-5" strokeWidth={1.8} />
+              </span>
+              <span className="relative z-10 text-xs sm:text-[13px] font-bold text-slate-300 group-hover:text-white transition-colors duration-300">
+                {name}
+              </span>
             </button>
           ))}
         </div>

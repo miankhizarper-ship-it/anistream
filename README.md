@@ -1,4 +1,4 @@
-# AniStream - Anime Streaming (Web)
+# EniStream - Anime Streaming (Web)
 
 An anime streaming web application: live AniList discovery (trending, popular,
 airing, search, browse by genre), a dedicated Yenime embed player with episode
