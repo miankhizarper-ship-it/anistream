@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-2.5 mb-3">
               <LogoMark className="w-9 h-9 rounded-xl" />
               <span className="text-lg font-black tracking-tight text-white">
-                ANI<span className="text-[#a855f7]">STREAM</span>
+                ENI<span className="text-[#a855f7]">STREAM</span>
               </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
